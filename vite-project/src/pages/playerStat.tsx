@@ -69,6 +69,7 @@ function Stats() {
             <div>
                 <button onClick={goBack}>Back</button>
                 <h1 style={{ textAlign: 'center' }}>Player Stats</h1>
+                <b><p>* Players with no stats are retired or don't have access to stats</p></b>
             </div>
 
             <div style={{ textAlign: 'center', margin: '1rem 0' }}>
