@@ -23,7 +23,7 @@ function Stats() {
         Navigate(-1);
     }
 
-    // API calls player info
+    // API calls player stats
     useEffect(() => {
         const fetchPlayers = async () => {
             try {
@@ -43,7 +43,7 @@ function Stats() {
     }, []); // Dependency on id to re-fetch when it changes
 
 
-    // API is calling player stats 
+    // API is calling player info
     useEffect(() => {
         const fetchPlayerStat = async () => {
             try {
@@ -62,7 +62,7 @@ function Stats() {
         fetchPlayerStat();
     }, [playerId]); // Dependency on id to re-fetch when it changes
 
-    if(error) return <p>{error}</p> // displays error message if data cant be pulled
+    if(error) return <p>Error: {error}</p> // displays error message if data cant be pulled
 
     return (
         <>
@@ -71,49 +71,118 @@ function Stats() {
                 <h1 style={{ textAlign: 'center' }}>Player Stats</h1>
                 <b><p>* Players with no stats are retired or don't have access to stats</p></b>
             </div>
+            <br />
+            <hr />
+            <br />
 
-            <div style={{ textAlign: 'center', margin: '1rem 0' }}>
-                <table style={{ marginLeft: 'auto', marginRight: 'auto', borderCollapse: 'collapse', width: '80%' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f2f2f2' }}>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Name</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Position</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>College</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style={{ border: '1px solid black', padding: '8px' }}>{playerInfo.first_name} {playerInfo.last_name}</td>
-                            <td style={{ border: '1px solid black', padding: '8px' }}>{playerInfo.position}</td>
-                            <td style={{ border: '1px solid black', padding: '8px' }}>{playerInfo.college}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            {players.map((player) => (
+                <>
 
-            <hr style={{ width: '80%', marginLeft: 'auto', marginRight: 'auto', border: 'none', margin: '0' }} />
+                <div style={{ textAlign: 'center', margin: '1rem 0' }}>
+                    <div className="cards-wrapper" key={player.id}>
+                        <div className="top-card card">
+                            <div className="container">
+                                <h4 style={{ color: `#000000`}}><b>{playerInfo.first_name} {playerInfo.last_name} #{playerInfo.jersey_number}</b> </h4>
+                                <p className="inline-draft"><b>Draft Year: {playerInfo.draft_year}</b></p>
+                                <p className="inline-draft"><b>Draft Round: {playerInfo.draft_round}</b></p>
+                                <p className="inline-draft"><b>Draft Pick: {playerInfo.draft_number}</b></p>
+                            </div>
+                        </div>
+                        <div className="bottom-cards">
+                            <div className="card">
+                                <div className="container">
+                                    <h4 style={{ color: `#000000`}}><b>Points</b></h4>
+                                    <hr />
+                                    <p style={{ color: `#000000`}}><b>{parseFloat(player.pts).toFixed(1)}</b></p>
+                                </div>
+                            </div>
+                            <div className="card">
+                                <div className="container">
+                                    <h4 style={{ color: `#000000`}}><b>Rebounds</b></h4>
+                                    <hr />
+                                    <p style={{ color: `#000000`}}><b>{parseFloat(player.reb).toFixed(1)}</b></p>
+                                </div>
+                            </div>
+                            <div className="card">
+                                <div className="container">
+                                    <h4 style={{ color: `#000000`}}><b>Assists</b></h4>
+                                    <hr />
+                                    <p style={{ color: `#000000`}}><b>{parseFloat(player.ast).toFixed(1)}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <div style={{ textAlign: 'center', margin: '1rem 0' }}>
-                <table style={{ marginLeft: 'auto', marginRight: 'auto', borderCollapse: 'collapse', width: '80%' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f2f2f2' }}>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Pts</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Ast</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Reb</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {players.map((player) => (
-                            <tr key={player.id}>
-                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.pts).toFixed(1)}</td>
-                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.ast).toFixed(1)}</td>
-                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.reb).toFixed(1)}</td>
+                    <br />
+                    <h1 style={{ textAlign: 'center' }}>Advanced Stats</h1>
+                    <br />
+                    <hr />
+                    <br />
+
+
+                    <table style={{ marginLeft: 'auto', marginRight: 'auto', borderCollapse: 'collapse', width: '80%' }}>
+                        <thead>
+                            <tr>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>Season</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FGA</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FGM</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FG %</th>                                
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FG3A</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FG3M</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FG3 %</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FTA</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FTM</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>FT %</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>OREB</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>DREB</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>STL</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>BLK</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>TO</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
 
+                            <tr key={player.id}>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{player.season}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fga).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fgm).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fg_pct).toFixed(2)}</td>                       
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fg3a).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fg3m).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fg3_pct).toFixed(2)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.fta).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.ftm).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.ft_pct).toFixed(2)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.oreb).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.dreb).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.stl).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.blk).toFixed(1)}</td>
+                                <td style={{ border: '1px solid black', padding: '8px' }}>{parseFloat(player.turnover).toFixed(1)}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                 
+                </div>
+
+                <p  style={{color: `#000000`}}>* Advanced Stats</p>
+                <li style={{color: `#000000`}}>FGA - Field Goals Attempts</li>
+                <li style={{color: `#000000`}}>FGM - Field Goals Made</li>
+                <li style={{color: `#000000`}}>FG % - Field Goal Percentage</li>
+                <li style={{color: `#000000`}}>FG3A - Field Goals 3's Attempts</li>
+                <li style={{color: `#000000`}}>FG3M - Field Goals 3's Made</li>
+                <li style={{color: `#000000`}}>FG3 % - Field Goal 3 Percentage</li>
+                <li style={{color: `#000000`}}>FTA - Free Throw's Attempts</li>
+                <li style={{color: `#000000`}}>FTM - Free Throw's Made</li>
+                <li style={{color: `#000000`}}>FT % - Free Throw Percentage</li>
+                <li style={{color: `#000000`}}>OREB - Offense Rebounds</li>
+                <li style={{color: `#000000`}}>DREB - Defense Rebounds</li>
+                <li style={{color: `#000000`}}>STL - Steals</li>
+                <li style={{color: `#000000`}}>BLK - Blocks</li>
+                <li style={{color: `#000000`}}>TO - Turnovers</li>
+                </>
+         ))}
 
         </>
     );

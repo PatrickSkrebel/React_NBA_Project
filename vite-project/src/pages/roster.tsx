@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import '../css/roster.css';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -13,6 +14,7 @@ function Roster() {
     const query = useQuery();
     const teamId = query.get('teamId');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     // Navigate
     const Navigate = useNavigate();
@@ -23,6 +25,7 @@ function Roster() {
 
     useEffect(() => {
         const fetchPlayers = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`https://api.balldontlie.io/v1/players?team_ids[]=${teamId}`, { // Corrected to template literals
                     headers: {
@@ -30,14 +33,29 @@ function Roster() {
                     }
                 });
                 setPlayers(response.data.data); // Assuming the data is stored in `data.data`
+               
             } catch (err) {
                 setError('Failed to fetch data');
                 console.error('Error fetching team data:', err);
+            }finally{
+                setLoading(false);
             }
         };
 
         fetchPlayers();
     }, [teamId]); // Dependency on id to re-fetch when it changes
+
+    if (loading) return
+    <>    
+    <div className="wrapper">
+        <div className="circle"></div>
+        <div className="circle"></div>
+        <div className="circle"></div>
+        <div className="shadow"></div>
+        <div className="shadow"></div>
+        <div className="shadow"></div>
+    </div>
+    </>;
 
     if (error) {
         return <p>{error}</p>;
@@ -50,32 +68,33 @@ function Roster() {
                 <b><p>* Players with no position are players who are retired and prevously played for the team</p></b>
                 <h1 style={{ textAlign: 'center'}}>Roster</h1>
             </div>
+            <br />
+            <hr />
+            <br />
 
-            <div style={{ textAlign: 'center', margin: '2rem 0' }}>
-                <table style={{ marginLeft: 'auto', marginRight: 'auto', borderCollapse: 'collapse' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f2f2f2' }}>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>#</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Name</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Position</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>College</th>
-                            <th style={{ border: '1px solid black', padding: '8px' }}>Country</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {players.map((player) => (
-                           
-                            <tr key={player.id} style={{ border: '1px solid black', padding: '8px' }}>
-                                <td>{player.jersey_number}</td>
-                                <td><Link to={`/playerStat?playerId=${player.id}`}>{player.first_name} {player.last_name}</Link></td>
-                                <td>{player.position}</td>
-                                <td>{player.college}</td> {/* Assuming you'll update this later */}
-                                <td>{player.country}</td> {/* Assuming you'll update this later */}
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+
+            <div className="flip-cards-container">
+            {players.map((player) => (
+                <div className="flip-card" key={player.id}>
+                    <div className="flip-card-inner">
+                        <div className="flip-card-front">
+                            <p className="title"><strong>{player.first_name} {player.last_name}</strong></p>
+                            <p style={{ color: `#000000`}}><strong>#{player.jersey_number}</strong></p>
+                        </div>
+                        <div className="flip-card-back">
+                            <p className="title">BACK</p>
+                            <p>Position {player.position}</p>
+                            <p>College: {player.college}</p>
+                            <p>Country: {player.country}</p>
+                            <p>
+                                <Link to={`/playerStat?playerId=${player.id}`}>View Stats</Link>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            ))}
             </div>
+
         </>
     );
 }

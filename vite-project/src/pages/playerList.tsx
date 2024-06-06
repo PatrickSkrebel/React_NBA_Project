@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 function List () {
     const [players, setPlayers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(Math.ceil(3100 / 100));
+    const [totalPages, setTotalPages] = useState(31);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [searchPlayer, setSearchPlayer] = useState([]);
@@ -25,8 +25,7 @@ function List () {
                 'Authorization': `d599cf75-13b3-413a-a46e-a13fca488265`
               }
             });
-            setPlayers(response.data.data);
-            setTotalPages(31); // Assuming the API returns total page count
+            setPlayers(response.data.data);            
           } catch (error) {
             setError('Failed to fetch data');
             console.error('Error fetching players:', error);
@@ -81,16 +80,40 @@ function List () {
         setCursor(0); // Reset cursor
         setCurrentPage(1); // Reset to first page
         console.log(`Selected: ${event.target.value}`);
+
+        if(event.target.value == 10)
+          {
+            setTotalPages(310);
+          }
+          else if(event.target.value == 25)
+            {
+              setTotalPages(124);
+            }
+            else if(event.target.value == 50)
+              {
+                setTotalPages(62);
+              }
+                else{
+                  setTotalPages(31);
+                }
       };
 
 
-      if (loading) return <p>Loading...</p>;
+      if (loading) return<div class="wrapper">
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="circle"></div>
+      <div className="shadow"></div>
+      <div className="shadow"></div>
+      <div className="shadow"></div>
+  </div>;
       if (error) return <p>{error}</p>;
 
 
 
       return (
           <>
+          
               <div>
                   <h1 style={{ textAlign: 'center'}}>Every Player</h1>
                   <button className="button" onClick={handlePrevious} disabled={currentPage === 1}>Previous</button>
