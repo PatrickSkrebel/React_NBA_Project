@@ -45,17 +45,19 @@ function Roster() {
         fetchPlayers();
     }, [teamId]); // Dependency on id to re-fetch when it changes
 
-    if (loading) return
-    <>    
-    <div className="wrapper">
-        <div className="circle"></div>
-        <div className="circle"></div>
-        <div className="circle"></div>
-        <div className="shadow"></div>
-        <div className="shadow"></div>
-        <div className="shadow"></div>
+
+    if (loading) return<div className="center-body">
+    <div className="loader-spanne-20">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-    </>;
+  </div>
+  
 
     if (error) {
         return <p>{error}</p>;

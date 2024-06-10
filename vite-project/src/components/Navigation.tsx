@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faIdCard } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/Navigation.css';
+import '../css/home.css';
+
+library.add(faIdCard);
 
 function Navigation() {
   const [teams, setTeams] = useState([]);
@@ -38,26 +44,36 @@ function Navigation() {
     <header className="header">
       <nav>
         <ul className="nav-list">
-          <li className="nav-item">
+          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
             <Link to="/" className="nav-link">Home</Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
             <Link to="/Standings" className="nav-link">Standings</Link>
           </li>
-          <li className="nav-item">
+          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
             <Link to="/PlayerList" className="nav-link">League</Link>
           </li>
-          <li className="nav-item">
-            <select onChange={handleSelectChange} className="nav-select">
+          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+            <Link to="/leagueLeaders" className="nav-link">Leaders</Link>
+          </li>
+          <li className="nav-link dropdown-toggle">
+            <select onChange={handleSelectChange} className="dropdown-item">
               <option value="">Select Team</option>
               {teams.slice(0, 30).map(team => (
                 <option key={team.id} value={team.id}>{team.full_name}</option>
               ))}
             </select>
           </li>
+          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+            <Link style={{ marginLeft: 450, marginRight: -500, }} to="/users/credentials" className="nav-link" >
+            <FontAwesomeIcon icon={['far', 'id-card']} size="2x" />
+            </Link>
+          </li>
+          
         </ul>
       </nav>
     </header>
+    
   );
 }
 
