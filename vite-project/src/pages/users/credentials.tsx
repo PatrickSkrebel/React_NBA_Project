@@ -3,7 +3,14 @@ import axios from 'axios';
 import '../../css/usersLogin.css'
 
 const Cred = () => {
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+    const [userPassword, setUserPassword] = useState("");
 
+
+    const handleSubmit = (event) => {
+
+    }
 
   return (
     <>    
