@@ -17,6 +17,44 @@ function List () {
     const [selectedValue, setSelectedValue] = useState('');
 
 
+    const [leaders, setLeaders] = useState([]);
+  
+    const [seasonSelectedValue, setSeasonSelectedValue] = useState('2023-24');
+    const [typeSelectValue, setTypeValue] = useState('Playoffs');
+    const [perSelectValue, setPerMode] = useState('PerGame');
+    const [statSelectValue, setStatTypeValue] = useState('PTS');
+  
+    const fetchLeagueLeaders = async (seasonSelectedValue, typeSelectValue, perMode, statCategory) => {
+      try {
+        const response = await axios.get(`https://stats.nba.com/stats/leagueLeaders`, {
+          params: {
+            LeagueID: '00',
+            PerMode: perMode,
+            StatCategory: statCategory,
+            Season: seasonSelectedValue,
+            SeasonType: typeSelectValue,
+            Scope: 'S',
+            ActiveFlag: null
+          },
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'x-nba-stats-origin': 'stats',
+            'x-nba-stats-token': 'true',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+          }
+        });
+  
+        setLeaders(response.data.resultSet.rowSet);
+      } catch (err) {
+        setError(err);
+        console.error(err);
+      }
+    };
+    useEffect(() => {
+      fetchLeagueLeaders(seasonSelectedValue, typeSelectValue, perSelectValue, statSelectValue);
+    }, [seasonSelectedValue, typeSelectValue, perSelectValue, statSelectValue]);
+
+
     useEffect(() => {
         const fetchPlayers = async () => {
           try {
@@ -99,14 +137,17 @@ function List () {
       };
 
 
-      if (loading) return<div class="wrapper">
-      <div className="circle"></div>
-      <div className="circle"></div>
-      <div className="circle"></div>
-      <div className="shadow"></div>
-      <div className="shadow"></div>
-      <div className="shadow"></div>
-  </div>;
+      if (loading) return<div className="center-body">
+      <div className="loader-spanne-20">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
       if (error) return <p>{error}</p>;
 
 
