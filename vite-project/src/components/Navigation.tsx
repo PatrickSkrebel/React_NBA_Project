@@ -41,39 +41,39 @@ function Navigation() {
   };
 
   return (
-    <header className="header">
-      <nav>
-        <ul className="nav-list">
-          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-            <Link to="/" className="nav-link">Home</Link>
-          </li>
-          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-            <Link to="/Standings" className="nav-link">Standings</Link>
-          </li>
-          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-            <Link to="/PlayerList" className="nav-link">League</Link>
-          </li>
-          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-            <Link to="/leagueLeaders" className="nav-link">Leaders</Link>
-          </li>
-          <li className="nav-link dropdown-toggle">
-            <select onChange={handleSelectChange} className="dropdown-item">
-              <option value="">Select Team</option>
-              {teams.slice(0, 30).map(team => (
-                <option key={team.id} value={team.id}>{team.full_name}</option>
-              ))}
-            </select>
-          </li>
-          <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-            <Link style={{ marginLeft: 450, marginRight: -500, }} to="/users/credentials" className="nav-link" >
-            <FontAwesomeIcon icon={['far', 'id-card']} size="2x" />
-            </Link>
-          </li>
-          
-        </ul>
-      </nav>
-    </header>
-    
+      <header className="header">
+        <nav>
+          <ul className="nav-list">
+            <div className="nav-center">
+              <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <Link to="/" className="nav-link">Home</Link>
+              </li>
+              <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <Link to="/Standings" className="nav-link">Standings</Link>
+              </li>
+              <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <Link to="/PlayerList" className="nav-link">League</Link>
+              </li>
+              <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <Link to="/leagueLeaders" className="nav-link">Leaders</Link>
+              </li>
+              <li className="nav-link dropdown-toggle">
+                <select onChange={handleSelectChange} className="dropdown-item">
+                  <option value="">Select Team</option>
+                  {teams.slice(0, 30).map(team => (
+                    <option key={team.id} value={team.id}>{team.full_name}</option>
+                  ))}
+                </select>
+              </li>
+            </div>
+            <li className="nav-item ml-auto">
+              <Link to="/users/credentials" className="nav-link">
+                <FontAwesomeIcon icon={['far', 'id-card']} size="2x" />
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      </header>    
   );
 }
 
