@@ -11,7 +11,7 @@
     height: 100vh;
     background-color: var(--bg-color-alt);
     margin-top: 10px;
-    border-radius: 45px; /* Adjust the value to change the roundness */
+    border-radius: 35px; /* Adjust the value to change the roundness */
 }
 
 .card-switch {
