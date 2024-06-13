@@ -86,6 +86,7 @@ function Stats() {
                                 <p className="inline-draft"><b>Draft Year: {playerInfo.draft_year}</b></p>
                                 <p className="inline-draft"><b>Draft Round: {playerInfo.draft_round}</b></p>
                                 <p className="inline-draft"><b>Draft Pick: {playerInfo.draft_number}</b></p>
+                                <p className="inline-draft"><b>Current: {playerInfo.team.full_name}</b></p>
                             </div>
                         </div>
                         <div className="bottom-cards">
