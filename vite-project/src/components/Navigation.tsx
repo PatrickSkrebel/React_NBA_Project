@@ -52,10 +52,13 @@ function Navigation() {
                 <Link to="/Standings" className="nav-link">Standings</Link>
               </li>
               <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                <Link to="/PlayerList" className="nav-link">League</Link>
+                <Link to="/PlayerList" className="nav-link">Players</Link>
               </li>
               <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
                 <Link to="/leagueLeaders" className="nav-link">Leaders</Link>
+              </li>
+              <li className="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                <Link to="/users/fantasy" className="nav-link">Fantasy</Link>
               </li>
               <li className="nav-link dropdown-toggle">
                 <select onChange={handleSelectChange} className="dropdown-item">
