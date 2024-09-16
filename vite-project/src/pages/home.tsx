@@ -12,6 +12,7 @@ function useQuery() {
 function Home () {
     const { data, error, loading } = useFetch('news');
     const [selectedArticle, setSelectedArticle] = useState(null);
+    const [newArticle, setNewsArticle] = useState([]);
 
     // Variables for grabbing api games
     const [games, setGames] = useState([]);
@@ -22,6 +23,10 @@ function Home () {
     // Keep Track of page
     const [cursor, setCursor] = useState(0);      
     const [selectedValue, setSelectedValue] = useState('');
+
+    // API calls news articles
+    // Will call from sports data
+
 
     // API calls games
     useEffect(() => {
@@ -78,19 +83,13 @@ function Home () {
                     ))}
                 </div>
                 <div className="main-article">
-                    {selectedArticle ? (
-                        <>
-                            <h2>{selectedArticle.headline}</h2>
-                            <p>{selectedArticle.abstract}</p>
-                            <div dangerouslySetInnerHTML={{ __html: selectedArticle.body }} />
-                            <p>Author: {selectedArticle.author}</p>
-                            <p>Section: {selectedArticle.section}</p>
-                            <p>Date: {new Date(selectedArticle.date).toLocaleDateString()}</p>
-                            <a href={selectedArticle.article_uri}>Read more</a>
-                        </>
-                    ) : (
-                        <p>Please select an article to read</p>
-                    )}
+                    {news.map((article) => (
+                        <div key={article.id} className="article-summary">
+                            <h2>{article.headline}</h2>
+                            <p>{article.body}</p>
+                        </div>
+                    ))}
+
                 </div>
                 <div className="games-container">
                     <div className="backdrop">
@@ -113,7 +112,6 @@ function Home () {
                 </div>
             </div>
         </div>
-        *Andrew Williams said he fucks with it
     </>
 
     );

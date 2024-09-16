@@ -14,6 +14,7 @@ import Test from "./pages/test";
 import LeagueLeaders from './pages/players/leagueLeaders';
 import Cred from './pages/users/credentials';
 import UpdateStandings from './pages/Admin/UpdateStandingsData';
+import Fantasy from './pages/users/fantasy';
 import '../src/css/Animated.css'
 
 
@@ -33,6 +34,7 @@ function App() {
               <Route path="/leagueLeaders" element={<LeagueLeaders />}/>
               <Route path="/users/credentials"element={<Cred />} />
               <Route path="/users/updatestandings"element={<UpdateStandings />} />
+              <Route path="/users/fantasy"element={<Fantasy/>}/>
               <Route path="/test"element={<Test />} />
             </Routes>
           </div>
